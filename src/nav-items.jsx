@@ -1,4 +1,4 @@
-import { Home } from "lucide-react";
+import { LayoutDashboard, FileText, Users, Settings } from "lucide-react";
 import Index from "./pages/Index.jsx";
 
 /**
@@ -6,9 +6,27 @@ import Index from "./pages/Index.jsx";
  */
 export const navItems = [
   {
-    title: "Home",
+    title: "Dashboard",
     to: "/",
-    icon: <Home className="h-4 w-4" />,
+    icon: <LayoutDashboard className="h-4 w-4" />,
     page: <Index />,
+  },
+  {
+    title: "Submission",
+    to: "/submission",
+    icon: <FileText className="h-4 w-4" />,
+    page: <div>Submission Page</div>,
+  },
+  {
+    title: "Students",
+    to: "/students",
+    icon: <Users className="h-4 w-4" />,
+    page: <div>Students Page</div>,
+  },
+  {
+    title: "Settings",
+    to: "/settings",
+    icon: <Settings className="h-4 w-4" />,
+    page: <div>Settings Page</div>,
   },
 ];
