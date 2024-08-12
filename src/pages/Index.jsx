@@ -26,8 +26,8 @@ const NavBar = () => (
         </div>
       </div>
       <div className="flex space-x-2">
-        <Button variant="outline" className="text-white border-white hover:bg-gray-700">Login</Button>
-        <Button variant="outline" className="text-white border-white hover:bg-gray-700">Logout</Button>
+        <Button variant="outline" className="text-gray-300 border-gray-300 hover:bg-gray-700 hover:text-white">Login</Button>
+        <Button variant="outline" className="text-gray-300 border-gray-300 hover:bg-gray-700 hover:text-white">Logout</Button>
       </div>
     </div>
   </nav>
