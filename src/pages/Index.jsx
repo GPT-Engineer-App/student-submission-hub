@@ -25,7 +25,10 @@ const NavBar = () => (
           <a href="#" className="hover:text-gray-300">Settings</a>
         </div>
       </div>
-      <Button variant="outline" className="text-white border-white hover:bg-gray-700">Logout</Button>
+      <div className="flex space-x-2">
+        <Button variant="outline" className="text-white border-white hover:bg-gray-700">Login</Button>
+        <Button variant="outline" className="text-white border-white hover:bg-gray-700">Logout</Button>
+      </div>
     </div>
   </nav>
 );
