@@ -6,7 +6,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Calendar } from "@/components/ui/calendar"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { format } from "date-fns"
-import { Calendar as CalendarIcon } from "lucide-react"
+import { Calendar as CalendarIcon, ChevronUp, ChevronDown } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const NavBar = () => (
@@ -79,6 +79,7 @@ const DatePickerWithRange = ({ date, setDate }) => {
 const Index = () => {
   const [reportIdFilter, setReportIdFilter] = useState('');
   const [dateRange, setDateRange] = useState({ from: undefined, to: undefined });
+  const [sortConfig, setSortConfig] = useState({ key: 'id', direction: 'ascending' });
 
   const fetchReports = async () => {
     // Simulated API call
@@ -102,6 +103,31 @@ const Index = () => {
     return matchesId && isInDateRange;
   });
 
+  const sortedReports = [...filteredReports].sort((a, b) => {
+    if (a[sortConfig.key] < b[sortConfig.key]) {
+      return sortConfig.direction === 'ascending' ? -1 : 1;
+    }
+    if (a[sortConfig.key] > b[sortConfig.key]) {
+      return sortConfig.direction === 'ascending' ? 1 : -1;
+    }
+    return 0;
+  });
+
+  const requestSort = (key) => {
+    let direction = 'ascending';
+    if (sortConfig.key === key && sortConfig.direction === 'ascending') {
+      direction = 'descending';
+    }
+    setSortConfig({ key, direction });
+  };
+
+  const getSortIcon = (columnName) => {
+    if (sortConfig.key === columnName) {
+      return sortConfig.direction === 'ascending' ? <ChevronUp className="inline-block w-4 h-4" /> : <ChevronDown className="inline-block w-4 h-4" />;
+    }
+    return null;
+  };
+
   return (
     <div className="min-h-screen bg-gray-100">
       <NavBar />
@@ -120,13 +146,17 @@ const Index = () => {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Report ID</TableHead>
-                <TableHead>Submitted Time</TableHead>
+                <TableHead onClick={() => requestSort('id')} className="cursor-pointer">
+                  Report ID {getSortIcon('id')}
+                </TableHead>
+                <TableHead onClick={() => requestSort('submittedTime')} className="cursor-pointer">
+                  Submitted Time {getSortIcon('submittedTime')}
+                </TableHead>
                 <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {filteredReports.map((report) => (
+              {sortedReports.map((report) => (
                 <TableRow key={report.id}>
                   <TableCell>{report.id}</TableCell>
                   <TableCell>{new Date(report.submittedTime).toLocaleString()}</TableCell>
